@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from cipher.caesar import CaesarCipher
+from cipher.vigenere import VigenereCipher
+
 
 app = Flask(__name__)
 
@@ -26,6 +28,24 @@ def caesar_decrypt():
     Caesar = CaesarCipher()
     decrypted_text = Caesar.decrypt_text(text, key)
     return f"text: {text}<br>key: {key}<br>decrypted_text: {decrypted_text}"
+
+#VIGENERE
+@app.route('/vigenere', methods=['GET', 'POST'])
+def vigenere():
+    result = ""
+    if request.method == 'POST':
+        text = request.form['text']
+        key = request.form['key']
+        action = request.form['action']
+        
+        if action == 'encrypt':
+            result = VigenereCipher(text, key, decrypt=False)
+        elif action == 'decrypt':
+            result = VigenereCipher(text, key, decrypt=True)
+    
+    return render_template('vigenere.html', result=result)
+
+
 
 #main function
 if __name__ == '__main__':
