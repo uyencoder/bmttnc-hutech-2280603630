@@ -16,7 +16,7 @@ def caesar_encrypt():
     plain_text = data['plain_text']
     key = int(data['key'])
     encrypted_text = caesar_cipher.encrypt_text(plain_text, key)
-    return jsonify({'encryted_message': encrypted_text})
+    return jsonify({'encrypted_message': encrypted_text})
 @app.route("/api/caesar/decrypt", methods=["POST"])
 def caesar_decrypt():
     data = request.json
